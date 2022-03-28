@@ -33,7 +33,13 @@ numbers.forEach(number => {
         }
     })
 });
-
+const disableExcept = () => {
+    let buttons = document.querySelectorAll('.button')
+    buttons.forEach(button => {
+        button.classList.add('disabled');
+    })
+    clearButton.classList.remove('disabled');
+}
 
 //Concept 1
 //1. Numbers and operators will be shown on screen when user pressed buttons.
@@ -93,18 +99,22 @@ operators.forEach(operator => {
                         case '+':
                             temp += parseInt(screen.innerHTML);
                             screen.innerHTML = temp;
+                            disableExcept();
                             break;
                         case '-':
                             temp -= parseInt(screen.innerHTML);
                             screen.innerHTML = temp;
+                            disableExcept();
                             break;
                         case '*':
                             temp *= parseInt(screen.innerHTML);
                             screen.innerHTML = temp;
+                            disableExcept();
                             break;
                         case '/':
                             temp /= parseInt(screen.innerHTML);
                             screen.innerHTML = temp;
+                            disableExcept();
                             break;
                     }
                     screen.innerHTML = temp;
