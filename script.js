@@ -83,27 +83,27 @@ operators.forEach(operator => {
             temp = parseInt(screen.innerHTML);
             lastOperator = operator.value;
         } else {
-            switch (operator.value) {
+            switch (lastOperator) {
                 case '+':
                     temp += parseInt(screen.innerHTML);
                     screen.innerHTML = temp;
-                    lastOperator = '+'
+                    lastOperator = operator.value;
                     break;
                 case '-':
                     temp -= parseInt(screen.innerHTML);
                     screen.innerHTML = temp;
-                    lastOperator = '-'
+                    lastOperator = operator.value;
                     break;
                 case '*':
                     temp *= parseInt(screen.innerHTML);
                     screen.innerHTML = temp;
-                    lastOperator = '*'
+                    lastOperator = operator.value;
                     break;
                 case '/':
                     temp /= parseInt(screen.innerHTML);
                     temp = temp.toFixed(2);
                     screen.innerHTML = temp;
-                    lastOperator = '/'
+                    lastOperator = operator.value;
                     break;
                 default:
                     alert("Numbers need to be inserted beforehand.");
