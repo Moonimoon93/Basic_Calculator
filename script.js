@@ -133,7 +133,7 @@ operators.forEach(operator => {
                         return;
                     }
                     memory /= parseInt(screen.innerHTML);
-                    memory = temp.toFixed(2);
+                    memory = memory.toFixed(2);
                     memoryScreen.innerHTML = memory;
                     temp = 0;
                     screen.innerHTML = temp;
