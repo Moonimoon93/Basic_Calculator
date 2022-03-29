@@ -64,12 +64,16 @@ const enableAll = () => {
 //User will press '=' button at the end of calculation.
 let temp = null;
 let lastOperator = null;
+const memoryScreen = document.querySelector('.memory');
+let memory = null;
 //Simple Clear button with clearing temp and screen.
 const clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', () => {
     temp = null;
     lastOperator = null;
+    memory = null;
     screen.innerHTML = 0;
+    memoryScreen.innerHTML = 0;
     enableAll();
 })
 
@@ -81,27 +85,49 @@ operators.forEach(operator => {
     operator.addEventListener('click', () => {
         if (temp === null) {
             temp = parseInt(screen.innerHTML);
+            memory = temp;
+            memoryScreen.innerHTML = memory;
+            temp = 0;
+            screen.innerHTML = temp;
             lastOperator = operator.value;
         } else {
             switch (lastOperator) {
                 case '+':
-                    temp += parseInt(screen.innerHTML);
+                    memory += parseInt(screen.innerHTML);
+                    memoryScreen.innerHTML = memory;
+                    temp = 0;
                     screen.innerHTML = temp;
                     lastOperator = operator.value;
                     break;
                 case '-':
-                    temp -= parseInt(screen.innerHTML);
+                    memory -= parseInt(screen.innerHTML);
+                    memoryScreen.innerHTML = memory;
+                    temp = 0;
                     screen.innerHTML = temp;
                     lastOperator = operator.value;
                     break;
                 case '*':
-                    temp *= parseInt(screen.innerHTML);
+                    if (screen.innerHTML === '0') {
+                        let confirmation = confirm("Do you really want to multiply 0?")
+                        if (confirmation === false) {
+                            return
+                        }
+                    }
+                    memory *= parseInt(screen.innerHTML);
+                    memoryScreen.innerHTML = memory;
+                    temp = 0;
                     screen.innerHTML = temp;
                     lastOperator = operator.value;
                     break;
                 case '/':
-                    temp /= parseInt(screen.innerHTML);
-                    temp = temp.toFixed(2);
+                    if (screen.innerHTML === '0') {
+                        alert("YOU SHALL NOT DIVIDE ANYTHING BY 0!")
+                        return;
+                    }
+                    memory /= parseInt(screen.innerHTML);
+                    memory = temp.toFixed(2);
+                    memoryScreen.innerHTML = memory;
+                    temp = 0;
                     screen.innerHTML = temp;
                     lastOperator = operator.value;
                     break;
@@ -114,25 +140,36 @@ operators.forEach(operator => {
 //Going to add an event listener on equalButton
 const equalButton = document.querySelector('#equal');
 equalButton.addEventListener('click', () => {
+    if (temp === null) {
+        alert("Do you not know how to use calculator? Try again.");
+        return;
+    } else if (screen.innerHTML === '0') {
+        alert("You haven't pressed any numbers yet")
+        return;
+    }
     switch (lastOperator) {
         case '+':
-            temp += parseInt(screen.innerHTML);
+            memory += parseInt(screen.innerHTML);
+            memoryScreen.innerHTML = memory;
             screen.innerHTML = temp;
             disableExcept();
             break;
         case '-':
-            temp -= parseInt(screen.innerHTML);
+            memory -= parseInt(screen.innerHTML);
+            memoryScreen.innerHTML = memory;
             screen.innerHTML = temp;
             disableExcept();
             break;
         case '*':
-            temp *= parseInt(screen.innerHTML);
+            memory *= parseInt(screen.innerHTML);
+            memoryScreen.innerHTML = memory;
             screen.innerHTML = temp;
             disableExcept();
             break;
         case '/':
-            temp /= parseInt(screen.innerHTML);
-            temp = temp.toFixed(2);
+            memory /= parseInt(screen.innerHTML);
+            memory = temp.toFixed(2);
+            memoryScreen.innerHTML = memory;
             screen.innerHTML = temp;
             disableExcept();
             break;
