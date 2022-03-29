@@ -26,7 +26,8 @@ body {
     text-align: right;
 }
 
-.screen {
+.screen,
+.behindScene {
     font-size: 20px;
     overflow: scroll;
 }

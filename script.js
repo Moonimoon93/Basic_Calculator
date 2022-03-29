@@ -33,12 +33,21 @@ numbers.forEach(number => {
         }
     })
 });
+//After user press '=' button, all buttons except 'CL' button will be disabled.
 const disableExcept = () => {
     let buttons = document.querySelectorAll('.button')
     buttons.forEach(button => {
         button.classList.add('disabled');
     })
     clearButton.classList.remove('disabled');
+}
+
+//After user press 'CL', all of buttons will be functional again.
+const enableAll = () => {
+    let buttons = document.querySelectorAll('.button')
+    buttons.forEach(button => {
+        button.classList.remove('disabled');
+    })
 }
 
 //Concept 1
@@ -61,17 +70,18 @@ clearButton.addEventListener('click', () => {
     temp = null;
     lastOperator = null;
     screen.innerHTML = 0;
+    enableAll();
 })
 
 //(2022-03-28 17:17) UPDATE!
 //Basic funcitons are completed!!
 //Now working on making calculator to disable all buttons EXCEPT clear button.
-//I don't understand why document.querySelectorAll('.button').disabled = true doesn't work.
 const operators = document.querySelectorAll('.operator');
 operators.forEach(operator => {
     operator.addEventListener('click', () => {
         if (temp === null) {
             temp = parseInt(screen.innerHTML);
+            lastOperator = operator.value;
         } else {
             switch (operator.value) {
                 case '+':
@@ -91,33 +101,9 @@ operators.forEach(operator => {
                     break;
                 case '/':
                     temp /= parseInt(screen.innerHTML);
+                    temp = temp.toFixed(2);
                     screen.innerHTML = temp;
                     lastOperator = '/'
-                    break;
-                case '=':
-                    switch (lastOperator) {
-                        case '+':
-                            temp += parseInt(screen.innerHTML);
-                            screen.innerHTML = temp;
-                            disableExcept();
-                            break;
-                        case '-':
-                            temp -= parseInt(screen.innerHTML);
-                            screen.innerHTML = temp;
-                            disableExcept();
-                            break;
-                        case '*':
-                            temp *= parseInt(screen.innerHTML);
-                            screen.innerHTML = temp;
-                            disableExcept();
-                            break;
-                        case '/':
-                            temp /= parseInt(screen.innerHTML);
-                            screen.innerHTML = temp;
-                            disableExcept();
-                            break;
-                    }
-                    screen.innerHTML = temp;
                     break;
                 default:
                     alert("Numbers need to be inserted beforehand.");
@@ -125,11 +111,33 @@ operators.forEach(operator => {
         }
     })
 });
-
-
-
 //Going to add an event listener on equalButton
 const equalButton = document.querySelector('#equal');
+equalButton.addEventListener('click', () => {
+    switch (lastOperator) {
+        case '+':
+            temp += parseInt(screen.innerHTML);
+            screen.innerHTML = temp;
+            disableExcept();
+            break;
+        case '-':
+            temp -= parseInt(screen.innerHTML);
+            screen.innerHTML = temp;
+            disableExcept();
+            break;
+        case '*':
+            temp *= parseInt(screen.innerHTML);
+            screen.innerHTML = temp;
+            disableExcept();
+            break;
+        case '/':
+            temp /= parseInt(screen.innerHTML);
+            temp = temp.toFixed(2);
+            screen.innerHTML = temp;
+            disableExcept();
+            break;
+    }
+});
 
 
 //Concept 2
