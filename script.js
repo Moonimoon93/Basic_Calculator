@@ -93,6 +93,10 @@ operators.forEach(operator => {
         } else {
             switch (lastOperator) {
                 case '+':
+                    if (screen.innerHTML === '0') {
+                        alert("You haven't pressed any numbers yet.")
+                        return;
+                    }
                     memory += parseInt(screen.innerHTML);
                     memoryScreen.innerHTML = memory;
                     temp = 0;
@@ -100,6 +104,10 @@ operators.forEach(operator => {
                     lastOperator = operator.value;
                     break;
                 case '-':
+                    if (screen.innerHTML === '0') {
+                        alert("You haven't pressed any numbers yet.")
+                        return;
+                    }
                     memory -= parseInt(screen.innerHTML);
                     memoryScreen.innerHTML = memory;
                     temp = 0;
